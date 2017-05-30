@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <title>This is a map.</title>
+    <script src="js/jquery.js" type="text/javascript"></script>
+    <link href="js/datetimepicker-master/build/jquery.datetimepicker.min.css" rel="stylesheet"> 
+    <script src="js/datetimepicker-master/build/jquery.datetimepicker.full.min.js"></script>
+    <script 
+    src="https://maps.googleapis.com/maps/api/js?libraries=geometry&key=AIzaSyAk9nRbh3Dae3-36PE9N7td026V6_NK02A" type="text/javascript"></script>
+    <link rel='stylesheet' type='text/css' href="css/style.css">
+    <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css">
+    <script src="js/csmapi.js"></script>
+    <script src="js/dan.js"></script>
+    <script src="js/dai.js"></script>
+    <script src="js/dai-app.js"></script>
+    <link rel="stylesheet" type="text/css" href="dist/css/map-icons.css">
+    <script type="text/javascript" src="dist/js/map-icons.js"></script>
+ </head>
+  <body>
+   
+   <div id="Location-map"></div>
+   <div id="container">
+     <div id="color_wrapper">
+       <input type="button" class="button" id="red" />
+       <input type="button" class="button" id="orange" />
+       <input type="button" class="button" id="purple" /> 
+       <input type="button" class="button" id="green" />
+     </div>
+     <div>
+       <button type="button" id ="submit">Submit!</button>
+     </div>
+     <div id="text_wrapper">
+       <h2>From: </h2>
+       <input id="datetimepickerFrom" type="text" class="form-control" />
+       <br>
+       <h2>To: </h2>
+       <input id="datetimepickerTo" type="text" class="form-control" />
+       <br>
+       <h2>Frequency: </h2>
+       <input type="text" id="freq" /> 
+       <br>
+       <h2>Select Dog: </h2>
+       <form id="DogForm">
+        <label><input type="radio" class="radio" name="selectdog" value="Kaboo" class="replyBtn"> 卡布 </label>
+        <label><input type="radio" class="radio" name="selectdog" value="Milk" class="replyBtn"> 牛奶 </label>
+       </form>
+
+     </div>
+    </div>
+  </body>
+<html>
