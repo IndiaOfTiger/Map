@@ -7,6 +7,7 @@ var dan = (function () {
     var _profile = {};
     var _registered = false;
     var _df_list;
+    var _origin_df_list;
     var _df_selected = {};
     var _df_is_odf = {};
     var _df_timestamp = {};
@@ -14,6 +15,7 @@ var dan = (function () {
     var _ctl_timestamp = '';
 
     function init (pull, endpoint, mac_addr, profile, callback) {
+        console.log(pull);
         _pull = pull;
         _mac_addr = mac_addr;
 
@@ -41,14 +43,20 @@ var dan = (function () {
                 if (!_registered) {
                     _registered = true;
                     _df_list = profile['df_list'].slice();
+                    _origin_df_list = profile['origin_df_list'].slice();
                     for (var i = 0; i < _df_list.length; i++) {
-                        _df_selected[_df_list[i]] = false;
-                        _df_is_odf[_df_list[i]] = true;
+                        console.log(profile.df_list[i]);
+                        //_df_selected[_df_list[i]] = profile.df_list[i]; // turn true;
+                         _df_selected[_df_list[i]] = false
+                        // _df_is_odf[_df_list[i]] = true
+                        _df_is_odf[_df_list[i]] = false; // all idf
                         _df_timestamp[_df_list[i]] = '';
                         _ctl_timestamp = '';
                         _suspended = true;
                     }
-                    setTimeout(pull_ctl, 0);
+                    setTimeout(push_ctl, 0);
+
+                    //setTimeout(push(profile.df_list[0], [154,247,60] , callback), 0);
                 }
                 callback(true);
             } else {
@@ -115,6 +123,42 @@ var dan = (function () {
         csmapi.pull(_mac_addr, _df_name, pull_odf_callback);
     }
 
+
+   
+
+    //
+
+    function push_ctl () {
+
+        if (!_registered) {
+            return;
+        }
+        push_idf(0);
+
+    }
+
+    function push_idf (index) {
+
+        if (!_registered) {
+            return;
+        }
+        //console.log("hi0");
+
+        if (index >= _df_list.length) {
+            setTimeout(push_ctl, POLLING_INTERVAL);
+            return;
+        }
+
+        var _df_name = _df_list[index];
+
+
+        function push_idf_callback () {
+            push_idf(index + 1);
+        }
+        console.log(_origin_df_list[index]());
+        csmapi.push(_mac_addr, _df_name, _origin_df_list[index](), push_idf_callback);
+    }
+
     function handle_command_message (data) {
         switch (data[0]) {
         case 'RESUME':
@@ -149,6 +193,7 @@ var dan = (function () {
     }
 
     function push (idf_name, data, callback) {
+        console.log("Test:", idf_name);
         if (idf_name == 'Control') {
             idf_name = '__Ctl_I__';
         }
