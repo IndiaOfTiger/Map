@@ -8,22 +8,27 @@ const dai = function (profile, ida) {
         }
         return s() + s() + s();
     })();
-    // produce mac address
+
     if (profile.is_sim == undefined){
         profile.is_sim = false;
     }
-    // not simulating
-    for (var i = 0; i < profile.df_list.length; i++) {
-        df_name = profile.df_list[i].name.replace(/_/g, '-')
-        df_func[df_name] = profile.df_list[i];
-        profile.df_list[i] = df_name;
+
+    for (var i = 0; i < profile.idf_list.length; i++) {
+        df_name = profile.idf_list[i].name.replace(/_/g, '-')
+        df_func[df_name] = profile.idf_list[i];
+        profile.idf_list[i] = df_name;
         console.log(df_name);
     }
-    // eg: Color_I -> Color-I
-    // df_func = Color_O r,g,b
 
-    function pull (odf_name, data) { // who called this
-        console.log("odf_name:", odf_name); // odf_name = control whyyyyyy? odf_name and data (?)
+    for (var i = 0; i < profile.odf_list.length; i++) {
+        df_name = profile.odf_list[i].name.replace(/_/g, '-')
+        df_func[df_name] = profile.odf_list[i];
+        profile.odf_list[i] = df_name;
+        console.log(df_name);
+    }
+
+
+    function pull (odf_name, data) {
         if (odf_name == 'Control') {
             switch (data[0]) {
             case 'SET_DF_STATUS':
@@ -63,6 +68,4 @@ const dai = function (profile, ida) {
     window.onpagehide = deregister;
 
     dan.init(pull, csmapi.get_endpoint(), mac_addr, profile, init_callback);
-    // window.location.origin = hostname + protocol
-    // all pull function sended
 };

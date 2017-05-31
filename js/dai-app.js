@@ -1,4 +1,4 @@
-$(function(){
+ $(function(){
   
         var map;
         
@@ -265,8 +265,6 @@ $(function(){
           return jsonArr;
         }
         function DogData_O(data){
-          //blala
-           /*
            console.log(data[0]);
            id = data[0].TrackerID;
            lat = parseFloat(data[0].N);
@@ -284,7 +282,7 @@ $(function(){
            {
                addMarker(lat, lng, id);
                LastLatLng = generate_latLng(lat,lng);
-           }*/
+           }
         }
         
 
@@ -439,12 +437,15 @@ $(function(){
 
             
         }
-  
+ 
         var profile = {
             'dm_name': 'Map',
+            'odf_list': [DogData_O],
+            'idf_list': [AskForDogData_I],
+            'origin_odf_list': [DogData_O],
+            'origin_idf_list': [AskForDogData_I],
             'is_sim': false,
-            'df_list':[DogData_O, AskForDogData_I],
-            'origin_df_list': [DogData_O, AskForDogData_I],
+            'df_list':['DogData_O', 'AskForDogData_I'],
         }
 
         var ida = {
